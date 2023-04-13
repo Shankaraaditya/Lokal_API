@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_news_app/functions/api.dart';
+import 'package:local_news_app/screens/home.dart';
 
 // import 'package:technewz/backend/functions.dart';
 // import 'package:technewz/utils/colors.dart';
@@ -10,6 +11,7 @@ class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
   static TextEditingController searchcontroller =
       TextEditingController(text: '');
+        
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -23,13 +25,13 @@ class _SearchBarState extends State<SearchBar> {
         CupertinoButton(
           onPressed: (){
              FocusScope.of(context).unfocus();
-             fetchnews();
+             fetchnews('us');
           },
           child: Container(
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromARGB(255, 212, 237, 249),
                 borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
             child: Icon(
@@ -44,7 +46,7 @@ class _SearchBarState extends State<SearchBar> {
             margin: EdgeInsets.all(5),
             padding: EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
-                color: Colors.grey,
+                color: Color.fromARGB(255, 212, 237, 249),
                 borderRadius: BorderRadius.circular(50)),
             child: Center(
                 child: Row(
@@ -67,7 +69,7 @@ class _SearchBarState extends State<SearchBar> {
           ),
         ),
         
-        // SizedBox(width: 10)
+        SizedBox(width: 10)
       ],
     );
   }

@@ -15,20 +15,29 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchnews();
+    fetchnews(selected!);
   }
+
+  List<String> items = <String>['in', 'us', 'ae', 'il', 'jp'];
+  static String? selected = 'in';
 
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
+
     return SafeArea(
-      
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 212, 237, 249),
           centerTitle: true,
-          title:  Text("Local App",style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold,fontSize: 25),),
+          title: Text(
+            "Local App",
+            style: GoogleFonts.ubuntu(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                color: Colors.black87),
+          ),
         ),
         body: Column(children: [
           Padding(
@@ -37,15 +46,28 @@ class _HomePageState extends State<HomePage> {
               height: 60,
               width: w * 0.9,
               decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(50))
-              ),
-
-              child:const SearchBar(),
+                  // color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: const SearchBar(),
             ),
           ),
+          DropdownButton<String>(
+            value: selected,
+            items: items
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    ))
+                .toList(),
+            onChanged: (String? newvalue) {
+              setState(() {
+                selected = newvalue;
+                fetchnews(selected!);
+              });
+            },
+          ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Expanded(
             child: Padding(
@@ -53,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                   // width: w-120,
                   child: FutureBuilder<List>(
-                future: fetchnews(),
+                future: fetchnews(selected!),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -61,11 +83,14 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           return NewsBox(
                             url: snapshot.data![index]['url'],
-                            imageurl: snapshot.data![index]['urlToImage'] ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGkAznCVTAALTD1o2mAnGLudN9r-bY6klRFB35J2hY7gvR9vDO3bPY_6gaOrfV0IHEIUo&usqp=CAU',
+                            imageurl: snapshot.data![index]['urlToImage'] ??
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGkAznCVTAALTD1o2mAnGLudN9r-bY6klRFB35J2hY7gvR9vDO3bPY_6gaOrfV0IHEIUo&usqp=CAU',
                             title: snapshot.data![index]['title'],
                             time: snapshot.data![index]['publishedAt'],
                             description:
                                 snapshot.data![index]['description'].toString(),
+                            content:
+                                snapshot.data![index]['content'].toString(),
                           );
                         });
                   } else if (snapshot.hasError) {
@@ -74,9 +99,10 @@ class _HomePageState extends State<HomePage> {
 
                   // By default, show a loading spinner.
                   return const Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.blue,         
-          ),);
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  );
                 },
               )),
             ),
