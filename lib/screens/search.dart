@@ -7,21 +7,21 @@ import 'package:local_news_app/screens/home.dart';
 // import 'package:technewz/backend/functions.dart';
 // import 'package:technewz/utils/colors.dart';
 
-class SearchBar extends StatefulWidget {
+class SearchBarWidget extends StatefulWidget {
   String country;
-  SearchBar({Key? key, required this.country}) : super(key: key);
+  SearchBarWidget({Key? key, required this.country}) : super(key: key);
   static TextEditingController searchcontroller =
       TextEditingController(text: '');
 
   @override
-  _SearchBarState createState() => _SearchBarState();
+  _SearchBarWidgetState createState() => _SearchBarWidgetState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchBarWidgetState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: SearchBar.searchcontroller,
+      controller: SearchBarWidget.searchcontroller,
       decoration: InputDecoration(
           hintText: 'Search in feed',
           hintStyle: GoogleFonts.lato(),
