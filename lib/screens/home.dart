@@ -20,52 +20,42 @@ class _HomePageState extends State<HomePage> {
 
   List<String> items = <String>['in', 'us', 'ae', 'il', 'jp'];
   String? selected = 'in';
-  
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 212, 237, 249),
+        backgroundColor: const Color.fromARGB(255, 212, 237, 249),
         centerTitle: true,
         title: Text(
           "Local App",
           style: GoogleFonts.ubuntu(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.black87),
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black87),
         ),
       ),
       body: Column(children: [
-        // Container(
-        //   // height: 60,
-        //   // width: w * 0.9,
-        //   decoration: const BoxDecoration(
-        //       // color: Colors.white,
-        //       borderRadius: BorderRadius.all(Radius.circular(50))),
-        //   // child:  SearchBar(country: selected!,),
-        // ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Container(
-            padding: EdgeInsets.only(left: 20),
-             decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 20),
+            decoration: BoxDecoration(
               border: Border.all(width: 1, color: Colors.grey),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-               ), 
-            child: SearchBar(country: selected!),),
+              borderRadius: const BorderRadius.all(Radius.circular(50)),
+            ),
+            child: SearchBarWidget(country: selected!),
+          ),
         ),
-        
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Country :" ,
-            style: GoogleFonts.ubuntu(fontSize: 20),
+            Text(
+              "Country :",
+              style: GoogleFonts.ubuntu(fontSize: 20),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             DropdownButton<String>(
               value: selected,
               items: items
@@ -106,15 +96,12 @@ class _HomePageState extends State<HomePage> {
                           time: snapshot.data![index]['publishedAt'],
                           description:
                               snapshot.data![index]['description'].toString(),
-                          content:
-                              snapshot.data![index]['content'].toString(),
+                          content: snapshot.data![index]['content'].toString(),
                         );
                       });
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
                 }
-
-                // By default, show a loading spinner.
                 return const Center(
                   child: CircularProgressIndicator(
                     color: Colors.blue,
