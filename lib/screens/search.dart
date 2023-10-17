@@ -8,6 +8,9 @@ import 'package:local_news_app/screens/home.dart';
 // import 'package:technewz/utils/colors.dart';
 
 class SearchBarWidget extends StatefulWidget {
+
+
+  
   String country;
   SearchBarWidget({Key? key, required this.country}) : super(key: key);
   static TextEditingController searchcontroller =
