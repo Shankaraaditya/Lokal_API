@@ -17,7 +17,7 @@ class SearchBarWidget extends StatefulWidget {
   _SearchBarWidgetState createState() => _SearchBarWidgetState();
 }
 
-class _SearchBarWidgetState extends State<SearchBar> {
+class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
